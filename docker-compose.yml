@@ -1,0 +1,23 @@
+version: '3'
+services:
+  php56:
+    image: "php56_v1.0.0"
+    ports:
+      - 8856:80
+    volumes:
+      - ./:/var/www/html/
+    depends_on:
+      - mysql
+  mysql:
+    image: "mysql:5.5"
+    ports:
+      - 3306:3306
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+  composer:
+    image: "composer"
+    volumes:
+      - ./:/app
+    depends_on:
+      - php56
+    command: composer install
